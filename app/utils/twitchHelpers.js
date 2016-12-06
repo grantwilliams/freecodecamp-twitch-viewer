@@ -12,32 +12,7 @@ function searchTwitchChannels (query) {
     return axios.get(`${BASE_URL}/search/channels?q=${query}&client_id=${CLIENT_ID}`)
 }
 
-// function getTwitchData (type, channelName) {
-//     return $.ajax({
-//       url: 'https://wind-bow.hyperdev.space/twitch-api/' + type + '/' + channelName + '?callback=?',
-//       dataType: 'jsonp',
-//       cache: false,
-//     //   success: function(data) {
-//     //     console.warn('success');
-//     //     // console.warn(data);
-//     //     return data;
-//     //   },
-//       error: function (xhr, ajaxOptions, thrownError) {
-//         console.warn(xhr.status);
-//         console.warn(thrownError);
-//         console.warn(url);
-//       }
-//     })
-// }
-
-
 var twitchHelpers = {
-    // getStreamingData: function (channel) {
-    //     return getTwitchData('streams', channel)
-    //     .then(function (streamer) {
-    //         return streamer.stream
-    //     })
-    // },
     getStreamingData: function (channel) {
         return getTwitchData('streams', channel)
         .then(function (streamer) {

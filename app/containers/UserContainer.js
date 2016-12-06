@@ -16,17 +16,18 @@ class UserContainer extends Component {
 
     }
 
-    componentWillMount() {
+    // componentWillMount() {
         
-    }
+    // }
 
     componentDidMount() {
+        console.log(this.props.channelName);
         twitchHelpers.getStreamingData(this.props.channelName)
         .then((streamer) => {
             if(streamer && streamer.data.stream) {
                 this.setState({
                     status: 'online',
-                    preview: <img className="img-responsive" src={streamer.data.stream.preview.medium} />,
+                    preview: <img className="img-responsive twitch-preview" src={streamer.data.stream.preview.medium} />,
                     game: streamer.data.stream.game + ': ' + streamer.data.stream.channel.status,
                     visible: this.props.showing == 'all' || this.props.showing == 'online' ? true : false 
                 });
@@ -44,6 +45,7 @@ class UserContainer extends Component {
                 });
             } else {
                 this.setState({
+                    displayName: user.data.display_name,
                     logo: user.data.logo,
                     url: user.data.url
                 });
@@ -51,9 +53,26 @@ class UserContainer extends Component {
         })
     }
 
-    // componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
+        switch(nextProps.showing) {
+            case 'online':
+            this.setState({
+                visible: this.state.status == 'online'
+            });
+            break;
 
-    // }
+            case 'offline':
+            this.setState({
+                visible: this.state.status !== 'online'
+            });
+            break;
+
+            default:
+            this.setState({
+                visible: true
+            });
+        }
+    }
 
     // shouldComponentUpdate(nextProps, nextState) {
 
@@ -72,15 +91,19 @@ class UserContainer extends Component {
     // }
 
     render() {
-        return (
-            <User
+        return (this.state.visible
+            ? <User
             displayName={this.state.displayName}
             visible={this.state.visible}
             status={this.state.status}
             game={this.state.game}
             logo={this.state.logo}
             preview={this.state.preview}
-            url={this.state.url} />
+            url={this.state.url}
+            onClick={this.props.handleDeleteStreamer}
+            dataKey={this.props.dataKey}
+            exists={this.props.exists} />
+            : null
         );
     }
 }

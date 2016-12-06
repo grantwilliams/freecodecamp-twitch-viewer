@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import UserContainer from './UserContainer'
-import AppContainer from './OldAppContainer'
+import AppContainer from './AppContainer'
+import Loading from '../components/Loading'
 
 class ResultsContainer extends Component {
     constructor(props) {
@@ -10,77 +11,59 @@ class ResultsContainer extends Component {
             isLoading: true,
             resultsDiv: '',
             showing: 'all',
-            // channels: ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb",
-            // "noobs2ninjas", "comster404", "brunofin", "syndicate", "riotgames", "ESL_CSGO", "summit1g", "LIRIK"]
         }
     }
 
-    componentWillMount() {
+    // componentWillMount() {
 
-    }
+    // }
 
     componentDidMount() {
-        var resultsDiv = this.props.originalChannels.map((channel, key) => { // change back to state
-            console.log(channel);
-                        return (
-                            <UserContainer
-                            channelName={channel}
-                            key={key}
-                            showing={this.state.showing}
-                            isLoading={this.state.isLoading} />
-                        )
-                    })
-        this.setState({
-            resultsDiv: resultsDiv,
-            isLoading: false
-        });
+        setTimeout(() => {
+            this.setState({
+                isLoading: false
+            });
+        }, 1500)
     }
 
-    componentWillReceiveProps(nextProps) {
+    // componentWillReceiveProps(nextProps) {
 
-    }
+    // }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return true
-    }
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return true
+    // }
 
-    componentWillUpdate(nextProps, nextState) {
+    // componentWillUpdate(nextProps, nextState) {
 
-    }
+    // }
 
-    componentDidUpdate(prevProps, prevState) {
+    // componentDidUpdate(prevProps, prevState) {
 
-    }
+    // }
 
-    componentWillUnmount() {
+    // componentWillUnmount() {
 
-    }
+    // }
 
     render() {
-        if (this.state.isLoading) {
-            return (
-                <div>
-                    LOADING...
-                </div>
-            )
-        } else {
-            return (
-                <div className="col-xs-12">
-                    {this.state.resultsDiv}
-                </div>
-                // <div>
-                //     {this.state.channels.map((channel, key) => {
-                //         return (
-                //             <UserContainer
-                //             channelName={channel}
-                //             key={key}
-                //             showing={this.state.showing}
-                //             isLoading={this.state.isLoading} />
-                //         )
-                //     })}
-                // </div>
-            );
-        }
+        return (this.state.isLoading
+            ? <Loading />
+            : <div id="resultsContainer" className="row">
+                {this.props.originalChannels.map((channel, key) => {
+                    return (
+                        <UserContainer
+                        channelName={channel.channel}
+                        dataKey={channel.dataKey}
+                        key={key}
+                        showing={this.props.showing}
+                        isLoading={this.state.isLoading}
+                        handleDeleteStreamer={this.props.handleDeleteStreamer}
+                        exists={channel.exists} />
+                    )
+                })}
+            </div>
+        );
     }
 }
 

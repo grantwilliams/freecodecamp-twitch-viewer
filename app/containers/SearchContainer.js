@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import Search from '../components/Search';
 import twitchHelpers from '../utils/twitchHelpers';
-import AppContainer from './OldAppContainer';
+import AppContainer from './AppContainer';
 
 class SearchContainer extends Component {
     constructor(props) {
@@ -23,9 +23,8 @@ class SearchContainer extends Component {
         });
         twitchHelpers.getChannelSuggestions(this.state.value)
         .then((results) => {
-            var channelSuggestions = []
-            results.data.channels.forEach((channel) => {
-                channelSuggestions.push(channel.name)
+            var channelSuggestions = results.data.channels.map(channel => {
+                return channel.display_name
             })
             this.setState({
                 suggestions: channelSuggestions
@@ -39,9 +38,9 @@ class SearchContainer extends Component {
         }
     }
 
-    componentDidMount() {
+    // componentDidMount() {
         
-    }
+    // }
 
     // componentWillReceiveProps(nextProps) {
 

@@ -1,11 +1,13 @@
 import React from 'react';
+import AppContainer from '../containers/AppContainer';
 import '../main.css';
 
 const MainContainer = (props) => {
     return (
-        <div className="container text-center" id="main-wrapper">
-            {props.children}
-        </div>
+        <AppContainer />
+        // <div className="container text-center" id="main-wrapper">
+            
+        // </div>
     );
 };
 

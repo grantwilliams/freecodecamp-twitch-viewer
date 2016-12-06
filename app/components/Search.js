@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 
 const Search = props => {
     return (
-        <div className="col-xs-6 col-xs-offset-3" id="search">
+        <div className="row" id="search">
             <datalist id="suggestions">
                 {props.suggestions.map((channel, key) => {
                     return (
@@ -10,7 +10,9 @@ const Search = props => {
                     )
                 })}
             </datalist>
-            <form className="form-inline" onSubmit={props.onSubmit}>
+            <form id="search-form" className="form-inline col-xs-10 col-xs-offset-1" onSubmit={props.onSubmit}>
+            <div className="form-group">
+            <div className="input-group">
                 <input
                 name="search"
                 className='form-control'
@@ -19,7 +21,9 @@ const Search = props => {
                 onChange={props.onChange}
                 type='text'
                 list="suggestions" />
-                <button type="submit" className="btn">Add Streamer</button>
+                <a type="submit" className="btn input-group-addon" onClick={() => props.onSubmit(props.value)}><i className="fa fa-search"></i></a>
+                </div>
+                </div>
             </form>
         </div>
     );
