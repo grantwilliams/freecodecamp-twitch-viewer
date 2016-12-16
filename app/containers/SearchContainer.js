@@ -13,10 +13,6 @@ class SearchContainer extends Component {
         }
     }
 
-    // componentWillMount() {
-
-    // }
-
     handleOnChange(e) {
         this.setState({
             value: e.target.value
@@ -38,30 +34,6 @@ class SearchContainer extends Component {
         }
     }
 
-    // componentDidMount() {
-        
-    // }
-
-    // componentWillReceiveProps(nextProps) {
-
-    // }
-
-    // shouldComponentUpdate(nextProps, nextState) {
-
-    // }
-
-    // componentWillUpdate(nextProps, nextState) {
-
-    // }
-
-    // componentDidUpdate(prevProps, prevState) {
-
-    // }
-
-    // componentWillUnmount() {
-
-    // }
-
     render() {
         return (
             <Search
@@ -75,7 +47,7 @@ class SearchContainer extends Component {
 }
 
 SearchContainer.propTypes = {
-
+    handleAddStreamer: PropTypes.func.isRequired
 };
 
 export default SearchContainer;

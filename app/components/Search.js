@@ -11,18 +11,18 @@ const Search = props => {
                 })}
             </datalist>
             <form id="search-form" className="form-inline col-xs-10 col-xs-offset-1" onSubmit={props.onSubmit}>
-            <div className="form-group">
-            <div className="input-group">
-                <input
-                name="search"
-                className='form-control'
-                placeholder='Search'
-                value={props.value}
-                onChange={props.onChange}
-                type='text'
-                list="suggestions" />
-                <a type="submit" className="btn input-group-addon" onClick={() => props.onSubmit(props.value)}><i className="fa fa-search"></i></a>
-                </div>
+                <div className="form-group">
+                    <div className="input-group">
+                        <input
+                        name="search"
+                        className='form-control'
+                        placeholder='Search to add streamer'
+                        value={props.value}
+                        onChange={props.onChange}
+                        type='text'
+                        list="suggestions" />
+                        <a type="submit" className="btn input-group-addon" onClick={() => props.onSubmit(props.value)}><i className="fa fa-search"></i></a>
+                    </div>
                 </div>
             </form>
         </div>
@@ -30,7 +30,10 @@ const Search = props => {
 };
 
 Search.propTypes = {
-    
+    onChange: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    suggestions: PropTypes.array.isRequired,
+    value: PropTypes.string.isRequired
 };
 
 export default Search;

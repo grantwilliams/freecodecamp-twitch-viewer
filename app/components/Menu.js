@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 const Menu = (props) => {
     return (
-        <div className="" id="menu">
+        <div id="menu">
             <button onClick={props.onClick} id="all"
             className={"col-xs-4 col-md-2 col-md-offset-3 btn menu-button" + (props.showing == 'all' ? ' active' : '')}>All</button>
             <button onClick={props.onClick} id="online"
@@ -11,6 +11,11 @@ const Menu = (props) => {
             className={"col-xs-4 col-md-2 btn menu-button" + (props.showing == 'offline' ? ' active' : '')}>Offline</button>
         </div>
     );
+};
+
+Menu.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    showing: PropTypes.string.isRequired
 };
 
 export default Menu;

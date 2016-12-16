@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import twitchHelpers from '../utils/twitchHelpers';
 import User from '../components/User';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class UserContainer extends Component {
     constructor(props) {
@@ -11,17 +12,13 @@ class UserContainer extends Component {
             displayName: this.props.channelName,
             status: 'offline',
             logo: '../images/default_profile_big.png',
-            game: 'Offline'
+            game: 'Offline',
+            uid: '',
         }
 
     }
 
-    // componentWillMount() {
-        
-    // }
-
     componentDidMount() {
-        console.log(this.props.channelName);
         twitchHelpers.getStreamingData(this.props.channelName)
         .then((streamer) => {
             if(streamer && streamer.data.stream) {
@@ -47,7 +44,8 @@ class UserContainer extends Component {
                 this.setState({
                     displayName: user.data.display_name,
                     logo: user.data.logo,
-                    url: user.data.url
+                    url: user.data.url,
+                    uid: user.data._id
                 });
             }
         })
@@ -74,44 +72,43 @@ class UserContainer extends Component {
         }
     }
 
-    // shouldComponentUpdate(nextProps, nextState) {
-
-    // }
-
-    // componentWillUpdate(nextProps, nextState) {
-
-    // }
-
-    // componentDidUpdate(prevProps, prevState) {
-
-    // }
-
-    // componentWillUnmount() {
-
-    // }
-
     render() {
         return (this.state.visible
-            ? <User
-            displayName={this.state.displayName}
-            visible={this.state.visible}
-            status={this.state.status}
-            game={this.state.game}
-            logo={this.state.logo}
-            preview={this.state.preview}
-            url={this.state.url}
-            onClick={this.props.handleDeleteStreamer}
-            dataKey={this.props.dataKey}
-            exists={this.props.exists} />
+            ? <ReactCSSTransitionGroup
+            transitionName="channel"
+            transitionAppear={true}
+            transitionEnter={true}
+            transitionLeave={true}
+            transitionAppearTimeout={500}
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={2000}
+            component="div"
+            >
+                <User
+                displayName={this.state.displayName}
+                visible={this.state.visible}
+                status={this.state.status}
+                game={this.state.game}
+                logo={this.state.logo}
+                preview={this.state.preview}
+                url={this.state.url}
+                onClick={this.props.handleDeleteStreamer}
+                dataKey={this.props.dataKey}
+                exists={this.props.exists}
+                key={this.state.uid}
+                />
+            </ReactCSSTransitionGroup>
             : null
         );
     }
 }
 
 UserContainer.propTypes = {
-    isLoading: PropTypes.bool.isRequired,
     channelName: PropTypes.string.isRequired,
+    dataKey: PropTypes.number.isRequired,
     showing: PropTypes.string.isRequired,
+    handleDeleteStreamer: PropTypes.func.isRequired,
+    exists: PropTypes.bool.isRequired
 };
 
 export default UserContainer;

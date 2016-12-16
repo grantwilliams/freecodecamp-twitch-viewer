@@ -4,22 +4,30 @@ html, body {
     height: 100%;
     margin: 0 auto;
     font-family: Cabin, "Helvetica Neue", Helvetica, sans-serif;
-
 }
 
-/*#top-section {
-    display: inline-block;
-    margin: 15px;
-    background: blue;
-}*/
+#app {
+    height: 100%;
+}
 
 #main-wrapper {
-    margin-top: 50px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#top-section {
+    padding-top: 50px;
+}
+
+.loading {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #header {
-    /*background: rgba(231, 76, 60, 1);*/
-    /*border: 1px solid black;*/
     position: relative;
     min-height: 70px;
 }
@@ -28,13 +36,7 @@ html, body {
     margin-bottom: 20px;
 }
 
-#menu-list {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-}
-
-#list-all, #list-online, #list-offline, a:link, a:visited {
+a:link, a:visited {
     color: #333;
     text-decoration: none;
 }
@@ -78,12 +80,6 @@ html, body {
     white-space: nowrap;
 }
 
-/*.twitch-game {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}*/
-
 div.streamer:hover {
     background: rgba(171, 183, 183, 0.85);
 }
@@ -97,25 +93,16 @@ div.streamer:hover {
 }
 
 .logo, .twitch-preview {
-    /*max-width: 150px;*/
-    /*max-width: 75px;*/
     max-height: 90px;
     border: 2px solid #808080;
     border-radius: 10px;
     margin: 0 auto;
 }
 
-/*.twitch-preview {
-    max-height: 90px;
-    border-radius: 10px;
-}*/
-
 .btn-delete {
     background-color: transparent;
     border: none;
     outline: none;
-    /*width: 20px;
-    height: 20px*/
 }
 
 .channel-appear {
@@ -142,7 +129,7 @@ div.streamer:hover {
 
 .channel-leave.channel-leave-active {
   opacity: 0.01;
-  transition: opacity 300ms ease-in;
+  transition: opacity 800ms ease-in;
 }
 
 @media only screen and (max-width: 767px) {
@@ -167,7 +154,7 @@ div.streamer:hover {
   right: 0;
 }
 
-.clamped .fill {
+.clamped {
   background: #fff; 
   height: 100%;
   position: absolute;

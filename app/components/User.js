@@ -1,17 +1,9 @@
 import React, {PropTypes} from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group' // ES6
 
 const User = props => {
     return (!props.exists
         ? null
-        : <ReactCSSTransitionGroup
-        transitionName="channel"
-        transitionAppear={true}
-        transitionAppearTimeout={500}
-        transitionEnter={false}
-        transitionLeave={false}
-        >
-            <div id={props.displayName} className={"streamer container-fluid row " + props.status}>
+        : <div id={props.displayName} className={"streamer container-fluid row " + props.status}>
                 <a href={props.url} target="_blank" className={"streamers-" + props.status}>
                     <div className="col-xs-5 col-sm-3 col-md-2 text-center text-div" id={props.displayName + "-twitch-logo"}>
                         <img className="img-responsive logo"
@@ -27,7 +19,6 @@ const User = props => {
                     <button className="btn-delete" onClick={() => props.onClick(props.dataKey)}><i className="fa fa-times"></i></button>
                 </div>
             </div>
-        </ReactCSSTransitionGroup>
     );
 };
 
