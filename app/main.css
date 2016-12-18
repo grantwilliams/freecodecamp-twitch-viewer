@@ -68,6 +68,7 @@ a:link, a:visited {
 }
 
 .text-div {
+    color: #333;
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
@@ -129,7 +130,7 @@ div.streamer:hover {
 
 .channel-leave.channel-leave-active {
   opacity: 0.01;
-  transition: opacity 800ms ease-in;
+  transition: opacity 300ms ease-in;
 }
 
 @media only screen and (max-width: 767px) {
@@ -154,7 +155,7 @@ div.streamer:hover {
   right: 0;
 }
 
-.clamped {
+.clamped .fill {
   background: #fff; 
   height: 100%;
   position: absolute;

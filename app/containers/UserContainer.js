@@ -73,30 +73,30 @@ class UserContainer extends Component {
     }
 
     render() {
-        return (this.state.visible
+        return (
+            this.state.visible
             ? <ReactCSSTransitionGroup
-            transitionName="channel"
-            transitionAppear={true}
-            transitionEnter={true}
-            transitionLeave={true}
-            transitionAppearTimeout={500}
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={2000}
-            component="div"
-            >
-                <User
-                displayName={this.state.displayName}
-                visible={this.state.visible}
-                status={this.state.status}
-                game={this.state.game}
-                logo={this.state.logo}
-                preview={this.state.preview}
-                url={this.state.url}
-                onClick={this.props.handleDeleteStreamer}
-                dataKey={this.props.dataKey}
-                exists={this.props.exists}
-                key={this.state.uid}
-                />
+                transitionName="channel"
+                transitionAppear={true}
+                transitionAppearTimeout={500}
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={300}
+                component="div"
+                key={this.props.dataKey}
+                >
+                    <User
+                    displayName={this.state.displayName}
+                    visible={this.state.visible}
+                    status={this.state.status}
+                    game={this.state.game}
+                    logo={this.state.logo}
+                    preview={this.state.preview}
+                    url={this.state.url}
+                    onClick={this.props.handleDeleteStreamer}
+                    dataKey={this.props.dataKey}
+                    key={this.props.dataKey}
+                    showChannel={this.props.showChannel}
+                    />
             </ReactCSSTransitionGroup>
             : null
         );
@@ -108,7 +108,7 @@ UserContainer.propTypes = {
     dataKey: PropTypes.number.isRequired,
     showing: PropTypes.string.isRequired,
     handleDeleteStreamer: PropTypes.func.isRequired,
-    exists: PropTypes.bool.isRequired
+    showChannel: PropTypes.bool.isRequired
 };
 
 export default UserContainer;

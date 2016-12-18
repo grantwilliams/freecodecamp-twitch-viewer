@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react';
 
 const User = props => {
-    return (!props.exists
-        ? null
-        : <div id={props.displayName} className={"streamer container-fluid row " + props.status}>
+    return (
+        props.showChannel
+        ? <div id={props.displayName} className={"streamer container-fluid row " + props.status} key={props.dataKey}>
                 <a href={props.url} target="_blank" className={"streamers-" + props.status}>
                     <div className="col-xs-5 col-sm-3 col-md-2 text-center text-div" id={props.displayName + "-twitch-logo"}>
                         <img className="img-responsive logo"
@@ -19,6 +19,7 @@ const User = props => {
                     <button className="btn-delete" onClick={() => props.onClick(props.dataKey)}><i className="fa fa-times"></i></button>
                 </div>
             </div>
+        : null
     );
 };
 
@@ -29,7 +30,9 @@ User.propTypes = {
     game: PropTypes.string.isRequired,
     logo: PropTypes.string.isRequired,
     preview: PropTypes.object,
-    url: PropTypes.string
+    url: PropTypes.string,
+    dataKey: PropTypes.number.isRequired,
+    showChannel: PropTypes.bool.isRequired
 };
 
 export default User;

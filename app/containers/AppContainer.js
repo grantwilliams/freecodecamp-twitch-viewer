@@ -16,7 +16,7 @@ class AppContainer extends Component {
         this.dataKey = 0
         var startingChannels = []
         startingChannelsList.forEach(channel => {
-            startingChannels.push({channel: channel.toLowerCase(), dataKey: this.dataKey, exists: true})
+            startingChannels.push({channel: channel.toLowerCase(), dataKey: this.dataKey, showChannel: true})
             this.dataKey++
         })
         this.state = {
@@ -39,15 +39,16 @@ class AppContainer extends Component {
                 var alreadyExists = false;
                 for(let channel of updatedChannels) {
                     if(channel.channel == streamerToAdd) {
-                        channel.exists ? alreadyExists = true : channel.exists = true, alreadyExists = true
+                        channel.showChannel ? alreadyExists = true : channel.showChannel = true, alreadyExists = true
                         this.setState({
                             originalChannels: updatedChannels
                         });
                     }
                 }
                 if(!alreadyExists) {
+                    updatedChannels.unshift({channel: streamerToAdd, dataKey: this.state.nextKey, showChannel: true})
                     this.setState({
-                        originalChannels: [{channel: streamerToAdd, dataKey:this.state.nextKey, exists: true}].concat(this.state.originalChannels),
+                        originalChannels: updatedChannels,
                         nextKey: this.state.nextKey + 1
                     });
                 }
@@ -59,7 +60,7 @@ class AppContainer extends Component {
         var updatedChannels = JSON.parse(JSON.stringify(this.state.originalChannels))
         for(let channel of updatedChannels) {
             if(channel.dataKey == streamerKey) {
-                channel.exists = false
+                channel.showChannel = false
                 break
             }
         }
@@ -95,15 +96,15 @@ class AppContainer extends Component {
                 </div>
                 {this.state.isLoading
                     ? <Loading />
-                    : this.state.originalChannels.map((channel, key) => {
+                    : this.state.originalChannels.map((channel) => {
                         return (
                             <UserContainer
                             channelName={channel.channel}
                             dataKey={channel.dataKey}
-                            key={key}
+                            key={channel.dataKey}
                             showing={this.state.showing}
                             handleDeleteStreamer={this.handleDeleteStreamer.bind(this)}
-                            exists={channel.exists} />
+                            showChannel={channel.showChannel} />
                         );
                     })
                 }
