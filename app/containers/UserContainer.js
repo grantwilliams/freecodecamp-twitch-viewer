@@ -8,46 +8,22 @@ class UserContainer extends Component {
         super(props);
 
         this.state = {
-            visible: false,
-            displayName: this.props.channelName,
-            status: 'offline',
-            logo: '../images/default_profile_big.png',
-            game: 'Offline',
-            uid: '',
+            channelDetails: {
+                visible: false
+            }
         }
 
     }
 
     componentDidMount() {
-        twitchHelpers.getStreamingData(this.props.channelName)
-        .then((streamer) => {
-            if(streamer && streamer.data.stream) {
-                this.setState({
-                    status: 'online',
-                    preview: <img className="img-responsive twitch-preview" src={streamer.data.stream.preview.medium} />,
-                    game: streamer.data.stream.game + ': ' + streamer.data.stream.channel.status,
-                    visible: this.props.showing == 'all' || this.props.showing == 'online' ? true : false 
-                });
-            } else {
-                this.setState({
-                    visible: this.props.showing == 'all' || this.props.showing == 'offline' ? true : false
-                });
+        twitchHelpers.updateChannelDetails(this.props.channelName)
+        .then((details) => {
+            if(this.props.showing) {
+                details.visible = true
             }
-        })
-        twitchHelpers.getChannelData(this.props.channelName)
-        .then((user) => {
-            if (user.data.status == 404) {
-                this.setState({
-                    game: 'Account Closed'
-                });
-            } else {
-                this.setState({
-                    displayName: user.data.display_name,
-                    logo: user.data.logo,
-                    url: user.data.url,
-                    uid: user.data._id
-                });
-            }
+            this.setState({
+                channelDetails: details
+            });
         })
     }
 
@@ -55,26 +31,35 @@ class UserContainer extends Component {
         switch(nextProps.showing) {
             case 'online':
             this.setState({
-                visible: this.state.status == 'online'
+                channelDetails: {
+                    ...this.state.channelDetails,
+                    visible: this.state.channelDetails.status == 'online'
+                }
             });
             break;
 
             case 'offline':
             this.setState({
-                visible: this.state.status !== 'online'
+                channelDetails: {
+                    ...this.state.channelDetails,
+                    visible: this.state.channelDetails.status !== 'online'
+                }
             });
             break;
 
             default:
             this.setState({
-                visible: true
+                channelDetails: {
+                    ...this.state.channelDetails,
+                    visible: true
+                }
             });
         }
     }
 
     render() {
         return (
-            this.state.visible
+            this.state.channelDetails.visible
             ? <ReactCSSTransitionGroup
                 transitionName="channel"
                 transitionAppear={true}
@@ -85,13 +70,13 @@ class UserContainer extends Component {
                 key={this.props.dataKey}
                 >
                     <User
-                    displayName={this.state.displayName}
-                    visible={this.state.visible}
-                    status={this.state.status}
-                    game={this.state.game}
-                    logo={this.state.logo}
-                    preview={this.state.preview}
-                    url={this.state.url}
+                    displayName={this.state.channelDetails.displayName}
+                    visible={this.state.channelDetails.visible}
+                    status={this.state.channelDetails.status}
+                    game={this.state.channelDetails.game}
+                    logo={this.state.channelDetails.logo}
+                    preview={this.state.channelDetails.preview}
+                    url={this.state.channelDetails.url}
                     onClick={this.props.handleDeleteStreamer}
                     dataKey={this.props.dataKey}
                     key={this.props.dataKey}
