@@ -57,6 +57,14 @@ var twitchHelpers = {
             })
         })
     },
+    getChannelData: function (channel) {
+        return getTwitchData('channels', channel)
+        .then(function (user) {
+            return user;
+        }).catch(function (err) {
+            console.log(err);
+        })
+    },
     getChannelSuggestions: function (query) {
         return searchTwitchChannels(query)
         .then(function (results) {

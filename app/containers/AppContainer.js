@@ -5,23 +5,16 @@ import Menu from '../components/Menu';
 import Loading from '../components/Loading';
 import UserContainer from './UserContainer';
 import twitchHelpers from '../utils/twitchHelpers';
+import update from 'immutability-helper';
 import '../main.css';
 
 class AppContainer extends Component {
     constructor(props) {
         super(props);
 
-        var startingChannelsList = ["ESL_SC2", "OgamingSC2", "freecodecamp", "storbeck", "noobs2ninjas", "comster404", "brunofin",
-        "syndicate", "riotgames", "ESL_CSGO", "LIRIK"]
-        this.dataKey = 0
-        var startingChannels = []
-        startingChannelsList.forEach(channel => {
-            startingChannels.push({channel: channel.toLowerCase(), dataKey: this.dataKey, showChannel: true})
-            this.dataKey++
-        })
         this.state = {
-            nextKey: this.dataKey,
-            originalChannels: startingChannels,
+            channels: ["ESL_SC2", "OgamingSC2", "freecodecamp", "storbeck", "noobs2ninjas", "comster404", "brunofin",
+                        "syndicate", "riotgames", "ESL_CSGO", "LIRIK"],
             showing: 'all',
             isLoading: true
         }
@@ -29,43 +22,24 @@ class AppContainer extends Component {
 
     handleAddStreamer(e) {
         typeof e == 'object' ? e.preventDefault() : null;
-        var streamerToAdd = typeof e == 'object' ? e.target.search.value.toLowerCase() : e.toLowerCase()
-        var updatedChannels = JSON.parse(JSON.stringify(this.state.originalChannels))
+        var streamerToAdd = typeof e == 'object' ? e.target.search.value : e
         twitchHelpers.getChannelData(streamerToAdd)
         .then((user) => {
             if(user.data.status == 404) {
                 alert("Streamer does not exist, please try another")
             } else {
-                var alreadyExists = false;
-                for(let channel of updatedChannels) {
-                    if(channel.channel == streamerToAdd) {
-                        channel.showChannel ? alreadyExists = true : channel.showChannel = true, alreadyExists = true
-                        this.setState({
-                            originalChannels: updatedChannels
-                        });
-                    }
-                }
-                if(!alreadyExists) {
-                    updatedChannels.unshift({channel: streamerToAdd, dataKey: this.state.nextKey, showChannel: true})
+                if(this.state.channels.indexOf(streamerToAdd) == -1) {
                     this.setState({
-                        originalChannels: updatedChannels,
-                        nextKey: this.state.nextKey + 1
+                        channels: update(this.state.channels, {$unshift: [streamerToAdd]})
                     });
                 }
             }
         })
     }
 
-    handleDeleteStreamer(streamerKey) {
-        var updatedChannels = JSON.parse(JSON.stringify(this.state.originalChannels))
-        for(let channel of updatedChannels) {
-            if(channel.dataKey == streamerKey) {
-                channel.showChannel = false
-                break
-            }
-        }
+    handleDeleteStreamer(dataKey) {
         this.setState({
-            originalChannels: updatedChannels
+            channels: update(this.state.channels, {$splice: [[dataKey, 1]]})
         });
     }
 
@@ -91,20 +65,19 @@ class AppContainer extends Component {
                     <SearchContainer
                     handleAddStreamer={this.handleAddStreamer.bind(this)} />
                     <Menu
-                    onClick={this.handleMenuClick.bind(this)}
+                    handleMenuClick={this.handleMenuClick.bind(this)}
                     showing={this.state.showing} />
                 </div>
                 {this.state.isLoading
                     ? <Loading />
-                    : this.state.originalChannels.map((channel) => {
+                    : this.state.channels.map((channel, dataKey) => {
                         return (
                             <UserContainer
-                            channelName={channel.channel}
-                            dataKey={channel.dataKey}
-                            key={channel.dataKey}
+                            channelName={channel}
+                            dataKey={dataKey}
+                            key={channel}
                             showing={this.state.showing}
-                            handleDeleteStreamer={this.handleDeleteStreamer.bind(this)}
-                            showChannel={channel.showChannel} />
+                            handleDeleteStreamer={this.handleDeleteStreamer.bind(this)} />
                         );
                     })
                 }

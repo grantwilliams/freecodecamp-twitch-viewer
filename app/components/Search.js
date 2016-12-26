@@ -10,7 +10,7 @@ const Search = props => {
                     )
                 })}
             </datalist>
-            <form id="search-form" className="form-inline col-xs-10 col-xs-offset-1" onSubmit={props.onSubmit}>
+            <form id="search-form" className="form-inline col-xs-10 col-xs-offset-1" onSubmit={props.handleAddStreamer}>
                 <div className="form-group">
                     <div className="input-group">
                         <input
@@ -18,10 +18,10 @@ const Search = props => {
                         className='form-control'
                         placeholder='Search to add streamer'
                         value={props.value}
-                        onChange={props.onChange}
+                        onChange={props.handleOnChange}
                         type='text'
                         list="suggestions" />
-                        <a type="submit" className="btn input-group-addon" onClick={() => props.onSubmit(props.value)}><i className="fa fa-search"></i></a>
+                        <a type="submit" className="btn input-group-addon" onClick={() => props.handleAddStreamer(props.value)}><i className="fa fa-search"></i></a>
                     </div>
                 </div>
             </form>
@@ -30,8 +30,8 @@ const Search = props => {
 };
 
 Search.propTypes = {
-    onChange: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
+    handleOnChange: PropTypes.func.isRequired,
+    handleAddStreamer: PropTypes.func.isRequired,
     suggestions: PropTypes.array.isRequired,
     value: PropTypes.string.isRequired
 };

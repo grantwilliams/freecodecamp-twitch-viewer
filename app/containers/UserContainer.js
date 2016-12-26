@@ -67,7 +67,8 @@ class UserContainer extends Component {
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={300}
                 component="div"
-                key={this.props.dataKey}
+                id={this.state.channelDetails.displayName}
+                className={"streamer container-fluid row " + this.state.channelDetails.status}
                 >
                     <User
                     displayName={this.state.channelDetails.displayName}
@@ -77,9 +78,9 @@ class UserContainer extends Component {
                     logo={this.state.channelDetails.logo}
                     preview={this.state.channelDetails.preview}
                     url={this.state.channelDetails.url}
-                    onClick={this.props.handleDeleteStreamer}
+                    handleDeleteStreamer={this.props.handleDeleteStreamer}
                     dataKey={this.props.dataKey}
-                    key={this.props.dataKey}
+                    key={this.props.channelName}
                     showChannel={this.props.showChannel}
                     />
             </ReactCSSTransitionGroup>
@@ -92,8 +93,7 @@ UserContainer.propTypes = {
     channelName: PropTypes.string.isRequired,
     dataKey: PropTypes.number.isRequired,
     showing: PropTypes.string.isRequired,
-    handleDeleteStreamer: PropTypes.func.isRequired,
-    showChannel: PropTypes.bool.isRequired
+    handleDeleteStreamer: PropTypes.func.isRequired
 };
 
 export default UserContainer;

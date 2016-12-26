@@ -37,8 +37,8 @@ class SearchContainer extends Component {
     render() {
         return (
             <Search
-            onChange={this.handleOnChange.bind(this)}
-            onSubmit={this.props.handleAddStreamer}
+            handleOnChange={this.handleOnChange.bind(this)}
+            handleAddStreamer={this.props.handleAddStreamer}
             suggestions={this.state.suggestions}
             value={this.state.value}
              />
