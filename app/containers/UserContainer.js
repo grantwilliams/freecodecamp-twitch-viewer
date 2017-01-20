@@ -16,11 +16,7 @@ class UserContainer extends Component {
     }
 
     componentDidMount() {
-        twitchHelpers.updateChannelDetails(this.props.channelName)
-        .then((details) => {
-            if(this.props.showing) {
-                details.visible = true
-            }
+        twitchHelpers.updateChannelDetails(this.props.channelName).then((details) => {
             this.setState({
                 channelDetails: details
             });
@@ -61,28 +57,25 @@ class UserContainer extends Component {
         return (
             this.state.channelDetails.visible
             ? <ReactCSSTransitionGroup
-                transitionName="channel"
-                transitionAppear={true}
-                transitionAppearTimeout={500}
-                transitionEnterTimeout={500}
-                transitionLeaveTimeout={300}
-                component="div"
-                id={this.state.channelDetails.displayName}
-                className={"streamer container-fluid row " + this.state.channelDetails.status}
-                >
-                    <User
-                    displayName={this.state.channelDetails.displayName}
-                    visible={this.state.channelDetails.visible}
-                    status={this.state.channelDetails.status}
-                    game={this.state.channelDetails.game}
-                    logo={this.state.channelDetails.logo}
-                    preview={this.state.channelDetails.preview}
-                    url={this.state.channelDetails.url}
-                    handleDeleteStreamer={this.props.handleDeleteStreamer}
-                    dataKey={this.props.dataKey}
-                    key={this.props.channelName}
-                    showChannel={this.props.showChannel}
-                    />
+            transitionName="channel"
+            transitionAppear={true}
+            transitionAppearTimeout={500}
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}
+            component="div"
+            id={this.state.channelDetails.displayName}
+            className={`streamer container-fluid row ${this.state.channelDetails.status}`} >
+                <User
+                displayName={this.state.channelDetails.displayName}
+                visible={this.state.channelDetails.visible}
+                status={this.state.channelDetails.status}
+                game={this.state.channelDetails.game}
+                logo={this.state.channelDetails.logo}
+                preview={this.state.channelDetails.preview}
+                url={this.state.channelDetails.url}
+                handleDeleteStreamer={this.props.handleDeleteStreamer}
+                dataKey={this.props.dataKey}
+                key={this.state.displayName} />
             </ReactCSSTransitionGroup>
             : null
         );

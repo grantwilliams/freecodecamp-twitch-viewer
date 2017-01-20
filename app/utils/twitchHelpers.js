@@ -1,5 +1,4 @@
 import axios from 'axios';
-import $ from 'jquery'
 
 var CLIENT_ID = 'lzs8jzwl2tuwu1exvekqrn54wyn3utp'
 var BASE_URL = 'https://api.twitch.tv/kraken'
@@ -23,7 +22,7 @@ var twitchHelpers = {
                 url: undefined,
                 uid: undefined,
                 preview: undefined,
-                visible: false,
+                visible: true,
             }
 
             getTwitchData('channels', channel).then((user) => {
@@ -58,16 +57,14 @@ var twitchHelpers = {
         })
     },
     getChannelData: function (channel) {
-        return getTwitchData('channels', channel)
-        .then(function (user) {
+        return getTwitchData('channels', channel).then((user) => {
             return user;
         }).catch(function (err) {
             console.log(err);
         })
     },
     getChannelSuggestions: function (query) {
-        return searchTwitchChannels(query)
-        .then(function (results) {
+        return searchTwitchChannels(query).then((results) => {
             return results
         })
     }

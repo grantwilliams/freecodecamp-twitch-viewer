@@ -14,7 +14,7 @@ const User = props => {
                 </div>
                 <div className="col-sm-3 col-md-2 twitch-preview-div">{props.preview}</div>
             </a>
-            <div className="col-xs-2 col-sm-1 col-md-1">
+            <div className="col-xs-2 col-sm-1 col-md-1 text-center">
                 <button className="btn-delete" onClick={() => props.handleDeleteStreamer(props.dataKey)}><i className="fa fa-times"></i></button>
             </div>
         </div>

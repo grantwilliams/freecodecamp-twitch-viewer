@@ -16,8 +16,9 @@ module.exports = {
   module: {
     loaders: [
       {test: /\.js$/, include: __dirname + '/app', loader: "babel-loader"},
-      {test: /\.css$/, loader: 'style-loader!css-loader'},
-      {test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'}
+      {test: /\.scss$/, loaders: ['style', 'css', 'sass']},
+      {test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'},
+      // {test: /\.css$/, loader: 'style-loader!css-loader'}
     ]
   },
   plugins: [HtmlWebpackPluginConfig]

@@ -1,36 +1,35 @@
 import React, {Component} from 'react';
-import Header from '../components/Header';
 import SearchContainer from './SearchContainer';
 import Menu from '../components/Menu';
 import Loading from '../components/Loading';
 import UserContainer from './UserContainer';
 import twitchHelpers from '../utils/twitchHelpers';
 import update from 'immutability-helper';
-import '../main.css';
+import '../styles/main.scss';
 
 class AppContainer extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            channels: ["ESL_SC2", "OgamingSC2", "freecodecamp", "storbeck", "noobs2ninjas", "comster404", "brunofin",
-                        "syndicate", "riotgames", "ESL_CSGO", "LIRIK"],
+            channels: ["ESL_SC2", "OgamingSC2", "freecodecamp", "comster404", "brunofin", "syndicate", "ESL_CSGO", "LIRIK"],
             showing: 'all',
-            isLoading: true
+            isLoading: true,
+            newStreamerAdded: ''
         }
     }
 
     handleAddStreamer(e) {
         typeof e == 'object' ? e.preventDefault() : null;
         var streamerToAdd = typeof e == 'object' ? e.target.search.value : e
-        twitchHelpers.getChannelData(streamerToAdd)
-        .then((user) => {
+        twitchHelpers.getChannelData(streamerToAdd).then((user) => {
             if(user.data.status == 404) {
                 alert("Streamer does not exist, please try another")
             } else {
                 if(this.state.channels.indexOf(streamerToAdd) == -1) {
                     this.setState({
-                        channels: update(this.state.channels, {$unshift: [streamerToAdd]})
+                        channels: update(this.state.channels, {$unshift: [streamerToAdd]}),
+                        newStreamerAdded: streamerToAdd
                     });
                 }
             }
@@ -61,8 +60,19 @@ class AppContainer extends Component {
         return (
             <div className="container text-center" id="main-wrapper">
                 <div id="top-section">
-                    <Header />
+                    <div id="title-text" className="text-center">
+                        TwitchTV Viewer
+                        <div id="sub-title" className="text-center">
+                            FreeCodeCamp Zipline
+                        </div>
+                    </div>
+                    <div id="source-code">
+                        <a href="https://github.com/grantwilliams/freecodecamp-twitch-viewer" target="_blank">
+                            <button className="btn btn-success">Source code on GitHub <i className="fa fa-github"></i></button>
+                        </a>
+                    </div>
                     <SearchContainer
+                    newStreamerAdded={this.state.newStreamerAdded}
                     handleAddStreamer={this.handleAddStreamer.bind(this)} />
                     <Menu
                     handleMenuClick={this.handleMenuClick.bind(this)}

@@ -9,17 +9,26 @@ class SearchContainer extends Component {
 
         this.state = {
             value: '',
-            suggestions: []
+            suggestions: [],
+            previousStreamerAdded: ''
         }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.newStreamerAdded !== this.state.previousStreamerAdded) {
+            this.clearSearch()
+        }
+        this.setState({
+            previousStreamerAdded: nextProps.newStreamerAdded
+        });
     }
 
     handleOnChange(e) {
         this.setState({
             value: e.target.value
         });
-        twitchHelpers.getChannelSuggestions(this.state.value)
-        .then((results) => {
-            var channelSuggestions = results.data.channels.map(channel => {
+        twitchHelpers.getChannelSuggestions(this.state.value).then((results) => {
+            var channelSuggestions = results.data.channels.map((channel) => {
                 return channel.display_name
             })
             this.setState({
@@ -32,6 +41,14 @@ class SearchContainer extends Component {
                 suggestions: []
             });
         }
+    }
+
+    clearSearch() {
+        console.log('clearing');
+        this.setState({
+            value: '',
+            suggestions: []
+        });
     }
 
     render() {

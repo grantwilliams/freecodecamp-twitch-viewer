@@ -1,0 +1,26 @@
+.channel-appear {
+  opacity: 0.01;
+}
+
+.channel-appear.channel-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.channel-enter {
+  opacity: 0.01;
+}
+
+.channel-enter.channel-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.channel-leave {
+  opacity: 1;
+}
+
+.channel-leave.channel-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

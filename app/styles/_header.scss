@@ -1,0 +1,33 @@
+#top-section {
+    padding-top: 50px;
+}
+
+#title-text {
+    position: relative;
+    min-height: 70px;
+    font-size: 4.5em;
+}
+
+#sub-title {
+    font-size: $sub-title-size;
+}
+
+#title-text, #source-code, #search {
+    margin-bottom: 20px;
+}
+
+.menu-button {
+    display: inline-block;
+    font-size: 24px;
+    background-color: #808080;
+    padding: 5px 10px 5px 10px;
+    cursor: pointer;
+}
+
+.menu-button:hover {
+    background: rgba(171, 183, 183, 0.85) !important;
+}
+
+.active {
+    background: rgba(171, 183, 183, 0.85) !important;
+}

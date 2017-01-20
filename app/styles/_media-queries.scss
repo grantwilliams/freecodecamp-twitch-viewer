@@ -1,0 +1,16 @@
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 640px) {
+    #title-text {
+        font-size: 2.3em;
+    }
+    #sub-title {
+        font-size: $sub-title-size;
+    }
+    .streamer {
+        font-size: 0.8em;
+    }
+    .twitch-preview-div {
+        display: none;
+    }
+}
