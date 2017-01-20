@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 
 const Menu = (props) => {
     return (
-        <div id="menu" className="row">
+        <div id="menu">
             <button onClick={props.handleMenuClick} id="all"
                 className={"col-xs-4 col-md-2 col-md-offset-3 btn menu-button" + (props.showing == 'all' ? ' active' : '')}>All
             </button>
