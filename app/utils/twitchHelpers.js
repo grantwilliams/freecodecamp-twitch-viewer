@@ -26,33 +26,32 @@ var twitchHelpers = {
             }
 
             getTwitchData('channels', channel).then((user) => {
-                if(user.data.error) {
-                    channelDetails = {
-                        ...channelDetails,
-                        game: 'Account Closed'
+                channelDetails = {
+                    ...channelDetails,
+                    displayName: user.data.display_name,
+                    logo: user.data.logo,
+                    url: user.data.url,
+                    uid: user.data._id
+                }
+
+                getTwitchData('streams', channel).then((streamer) => {
+                    if(streamer && streamer.data.stream) {
+                        channelDetails = {
+                            ...channelDetails,
+                            status: 'online',
+                            preview: <img className="img-responsive twitch-preview" src={streamer.data.stream.preview.medium} />,
+                            game: streamer.data.stream.game + ': ' + streamer.data.stream.channel.status,
+                        }
                     }
                     resolve(channelDetails)
-                } else {
-                    channelDetails = {
-                        ...channelDetails,
-                        displayName: user.data.display_name,
-                        logo: user.data.logo,
-                        url: user.data.url,
-                        uid: user.data._id
-                    }
-
-                    getTwitchData('streams', channel).then((streamer) => {
-                        if(streamer && streamer.data.stream) {
-                            channelDetails = {
-                                ...channelDetails,
-                                status: 'online',
-                                preview: <img className="img-responsive twitch-preview" src={streamer.data.stream.preview.medium} />,
-                                game: streamer.data.stream.game + ': ' + streamer.data.stream.channel.status,
-                            }
-                        }
-                        resolve(channelDetails)
-                    })
+                })
+            })
+            .catch(error => {
+                channelDetails = {
+                    ...channelDetails,
+                    game: 'Account Closed'
                 }
+                resolve(channelDetails)
             })
         })
     },

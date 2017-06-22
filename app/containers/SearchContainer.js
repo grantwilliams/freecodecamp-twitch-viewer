@@ -44,7 +44,6 @@ class SearchContainer extends Component {
     }
 
     clearSearch() {
-        console.log('clearing');
         this.setState({
             value: '',
             suggestions: []
